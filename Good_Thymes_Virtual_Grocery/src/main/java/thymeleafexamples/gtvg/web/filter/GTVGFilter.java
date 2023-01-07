@@ -19,15 +19,7 @@
  */
 package thymeleafexamples.gtvg.web.filter;
 
-import java.io.IOException;
-import java.io.Writer;
-
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.thymeleaf.ITemplateEngine;
@@ -42,7 +34,11 @@ import thymeleafexamples.gtvg.business.entities.User;
 import thymeleafexamples.gtvg.web.controller.IGTVGController;
 import thymeleafexamples.gtvg.web.mapping.ControllerMappings;
 
+import java.io.IOException;
+import java.io.Writer;
 
+
+// 把过滤器当servlet用了
 public class GTVGFilter implements Filter {
 
     private ITemplateEngine templateEngine;
@@ -53,43 +49,37 @@ public class GTVGFilter implements Filter {
         super();
     }
     
-    
-    
     private static void addUserToSession(final HttpServletRequest request) {
         // Simulate a real user session by adding a user object
         request.getSession(true).setAttribute("user", new User("John", "Apricot", "Antarctica", null));
     }
 
-
-
-
+    // 初始化模板引擎
+    @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
         this.application =
                 JakartaServletWebApplication.buildApplication(filterConfig.getServletContext());
         this.templateEngine = buildTemplateEngine(this.application);
     }
 
-
-
-
+    @Override
     public void doFilter(final ServletRequest request, final ServletResponse response,
                          final FilterChain chain) throws IOException, ServletException {
         addUserToSession((HttpServletRequest)request);
+        // 将请求委托给 process 方法
+        // 如果正常处理，则返回true，则不传给下一个过滤器了
+        // 如果不是正常处理，则返回false，传给下一个过滤器，但是不存在能处理的下一个过滤器，所以报错
         if (!process((HttpServletRequest)request, (HttpServletResponse)response)) {
             chain.doFilter(request, response);
         }
     }
 
-
-
-
+    @Override
     public void destroy() {
         // nothing to do
     }
 
-    
-
-
+    // 正常处理返回 true，处理过程有问题返回false。
     private boolean process(final HttpServletRequest request, final HttpServletResponse response)
             throws ServletException {
         
@@ -105,7 +95,7 @@ public class GTVGFilter implements Filter {
                 return false;
             }
 
-            
+            // 路由到具体的控制器
             /*
              * Query controller/URL mapping and obtain the controller
              * that will process the request. If no controller is available,
@@ -129,6 +119,7 @@ public class GTVGFilter implements Filter {
              */
             final Writer writer = response.getWriter();
 
+            // 控制器处理
             /*
              * Execute the controller and process view template,
              * writing the results to the response writer. 

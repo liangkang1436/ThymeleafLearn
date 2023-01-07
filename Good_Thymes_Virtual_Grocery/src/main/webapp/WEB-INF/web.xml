@@ -18,9 +18,10 @@
     </filter>
 
 
+    <!-- 过滤所有请求，在过滤器中查找控制器，并调用控制器获得返回结果   -->
     <filter-mapping>
         <filter-name>gtvgfilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
 </web-app>

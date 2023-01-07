@@ -19,13 +19,13 @@
  */
 package thymeleafexamples.gtvg.web.controller;
 
-import java.io.Writer;
-
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import thymeleafexamples.gtvg.business.entities.Product;
 import thymeleafexamples.gtvg.business.services.ProductService;
+
+import java.io.Writer;
 
 public class ProductCommentsController implements IGTVGController {
 
@@ -33,8 +33,9 @@ public class ProductCommentsController implements IGTVGController {
     public ProductCommentsController() {
         super();
     }
-    
-    
+
+
+    @Override
     public void process(final IWebExchange webExchange, final ITemplateEngine templateEngine, final Writer writer)
             throws Exception {
         

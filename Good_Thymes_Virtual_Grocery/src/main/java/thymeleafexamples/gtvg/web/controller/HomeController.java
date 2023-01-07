@@ -19,12 +19,12 @@
  */
 package thymeleafexamples.gtvg.web.controller;
 
-import java.io.Writer;
-import java.util.Calendar;
-
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
+
+import java.io.Writer;
+import java.util.Calendar;
 
 public class HomeController implements IGTVGController {
 
@@ -33,7 +33,8 @@ public class HomeController implements IGTVGController {
         super();
     }
     
-    
+
+    @Override
     public void process(final IWebExchange webExchange, final ITemplateEngine templateEngine, final Writer writer)
             throws Exception {
         

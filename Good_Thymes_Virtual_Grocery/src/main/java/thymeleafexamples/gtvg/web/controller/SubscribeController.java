@@ -19,11 +19,11 @@
  */
 package thymeleafexamples.gtvg.web.controller;
 
-import java.io.Writer;
-
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
+
+import java.io.Writer;
 
 public class SubscribeController implements IGTVGController {
 
@@ -31,8 +31,8 @@ public class SubscribeController implements IGTVGController {
     public SubscribeController() {
         super();
     }
-    
-    
+
+    @Override
     public void process(final IWebExchange webExchange, final ITemplateEngine templateEngine, final Writer writer)
             throws Exception {
         
