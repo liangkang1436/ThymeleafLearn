@@ -144,16 +144,18 @@ public class GTVGFilter implements Filter {
 
         final WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
 
-        // HTML is the default mode, but we will set it anyway for better understanding of code
+        // 设置 模板模式，也就是这个 TemplateEngine  要用来渲染什么拓展名的文件，这里我们指定的是 HTML（默认就是HTML）
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        // This will convert "home" to "/WEB-INF/templates/home.html"
+        // 设置模板名称的前缀和后缀。
+        // 我们在调用 ITemplateEngine#process方法的时候都要指定模板名称，这里配置的前缀和后缀就是用来确定模板名称对应的文件的实际路径的
+        // 根据下面的配置，视图名称为"home"的视图会去 "/WEB-INF/templates/home.html" 这个位置查找
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
-        // Set template cache TTL to 1 hour. If not set, entries would live in cache until expelled by LRU
+        // 模板名称跟实际路径的信息会进行缓存，这里设置缓存时间，如果没有设置，会根据LRU算法进行移除
+        // TTL (Time To Live) ；LRU (Least Recently Used，谁被缓存的最早，谁被消除)
         templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
 
-        // Cache is set to true by default. Set to false if you want templates to
-        // be automatically updated when modified.
+        // 默认进行缓存，
         templateResolver.setCacheable(true);
 
         final TemplateEngine templateEngine = new TemplateEngine();
