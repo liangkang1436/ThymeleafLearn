@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         rederFromClasspath();
         rederFromFile();
+        readFromString();
     }
 
     private static void rederFromClasspath() {
@@ -49,6 +50,17 @@ public class Main {
         ctx.setVariable("name", "xiashuo");
         ctx.setVariable("from", "renderFromFile");
         String simpleText = templateEngine.process("simpleText", ctx);
+        System.out.println(simpleText);
+    }
+
+    private static void readFromString(){
+        // 不设置 TemplateResolver ，默认会使用 StringTemplateResolver
+        final TemplateEngine templateEngine = new TemplateEngine();
+
+        Context ctx = new Context();
+        ctx.setVariable("name", "xiashuo");
+        ctx.setVariable("from", "renderFromString");
+        String simpleText = templateEngine.process("Hello World ,I'm [(${name})] from: [(${from})]", ctx);
         System.out.println(simpleText);
     }
 

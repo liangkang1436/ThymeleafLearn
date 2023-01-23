@@ -37,12 +37,14 @@ public class HomeController implements IGTVGController {
     @Override
     public void process(final IWebExchange webExchange, final ITemplateEngine templateEngine, final Writer writer)
             throws Exception {
-        
+
+        // 构造web场景的上下文
         WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
         ctx.setVariable("today", Calendar.getInstance());
-        
+
+        // 调用TemplateEngine的process方法，将模板渲染结果写入到 writer 中
         templateEngine.process("home", ctx, writer);
-        
+
     }
 
 }
