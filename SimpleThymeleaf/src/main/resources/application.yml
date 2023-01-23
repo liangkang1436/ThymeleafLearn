@@ -1,0 +1,14 @@
+server:
+  # 当前应用所在的Web服务器监听的本地端口
+  port: 8082
+#  servlet:
+    # 应用的上下文路径
+#    context-path: /SpringBoot-Thymeleaf
+    # 启用默认的Servlet
+#    register-default-servlet: true
+
+#spring:
+#  mvc:
+
+
+
